@@ -29,7 +29,7 @@ export function computeMonthlyOwed(input: ReportInput): Record<Person, number> {
   return totals;
 }
 
-export async function buildWorkbookArrayBuffer(input: ReportInput): Promise<ArrayBuffer> {
+export async function buildWorkbookBuffer(input: ReportInput): Promise<Buffer> {
   const workbook = new ExcelJS.Workbook();
   const ws = workbook.addWorksheet('Monthly Report');
   const totals = computeMonthlyOwed(input);
@@ -55,10 +55,5 @@ export async function buildWorkbookArrayBuffer(input: ReportInput): Promise<Arra
   ws.getColumn(2).width = 20;
 
   const arrayBuffer = await workbook.xlsx.writeBuffer();
-  return arrayBuffer as ArrayBuffer;
-}
-
-export async function buildWorkbookBytes(input: ReportInput): Promise<Uint8Array> {
-  const arrayBuffer = await buildWorkbookArrayBuffer(input);
-  return new Uint8Array(arrayBuffer);
+  return Buffer.from(arrayBuffer);
 }
