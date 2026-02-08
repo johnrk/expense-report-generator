@@ -55,10 +55,5 @@ export async function buildWorkbookBuffer(input: ReportInput): Promise<Buffer> {
   ws.getColumn(2).width = 20;
 
   const arrayBuffer = await workbook.xlsx.writeBuffer();
-  return Buffer.from(arrayBuffer as ArrayBuffer);
-}
-
-export async function buildWorkbookBytes(input: ReportInput): Promise<Uint8Array> {
-  const buffer = await buildWorkbookBuffer(input);
-  return new Uint8Array(buffer);
+  return Buffer.from(arrayBuffer);
 }

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { ROSTER } from '@/lib/constants';
-import { buildWorkbookBytes } from '@/lib/report';
+import { buildWorkbookBuffer } from '@/lib/report';
 import { parseMonth } from '@/lib/split';
 
 const lineTotalsSchema = z.object({
@@ -41,9 +41,9 @@ export async function POST(request: Request) {
       }
     }
 
-    const bytes = await buildWorkbookBytes(body);
+    const buffer = await buildWorkbookBuffer(body);
 
-    return new NextResponse(bytes, {
+    return new NextResponse(buffer, {
       status: 200,
       headers: {
         'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
